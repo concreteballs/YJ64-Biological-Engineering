@@ -39,3 +39,12 @@ def test_no_proposal_reason_maps_to_rationale():
     response = ContributionResponse("biology", candidate(), no_proposal=True,
                                     no_proposal_rationale="No evidence-backed improvement")
     assert to_wire_contribution(response)["rationale"] == "No evidence-backed improvement"
+
+
+def test_wire_proposal_rejects_missing_schema_required_evidence():
+    proposal = EnhancementProposal(
+        "p-no-evidence", "biology", candidate(), "Improve robustness", "Add layer",
+        "Comparative modelling", "Higher durability", ("cycle life",), (),
+    )
+    with pytest.raises(ValueError, match="require evidence"):
+        to_wire_proposal(proposal)
