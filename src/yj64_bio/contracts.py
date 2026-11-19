@@ -31,9 +31,11 @@ class CandidateRef:
     candidate_id: str
     version: int
     schema_version: str
+    origin_module: str
 
     def __post_init__(self) -> None:
-        if not self.candidate_id.strip() or self.version < 1 or not self.schema_version.strip():
+        if (not self.candidate_id.strip() or self.version < 1
+                or not self.schema_version.strip() or not self.origin_module.strip()):
             raise ValueError("candidate identity, positive version and schema version are required")
 
 
@@ -166,7 +168,11 @@ class CrossDisciplinaryAssessment:
             r.reviewer_module for r in self.reviews
             if r.candidate == self.candidate
         }
-        return self.relevant_modules.issubset(reviewers)
+        return (
+            self.candidate.origin_module in self.relevant_modules
+            and self.relevant_modules.issubset(reviewers)
+            and any(module != self.candidate.origin_module for module in reviewers)
+        )
 
 
 def affected_reviews_to_invalidate(
