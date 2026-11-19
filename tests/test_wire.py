@@ -13,7 +13,7 @@ def test_candidate_identity_is_preserved():
     wire = to_wire_candidate(candidate())
     assert wire["schema_id"] == "yj64.cross_module.candidate.v1"
     assert wire["candidate_id"] == "bio-1" and wire["version"] == 2
-    assert wire["schema_version"] == "1.0" and wire["origin_module"] == "biology"
+    assert wire["candidate_schema_version"] == "1.0" and wire["origin_module"] == "biology"
 
 def test_evidence_requires_stable_id_and_preserves_provenance():
     wire = to_wire_evidence(evidence(confidence=0.7))
