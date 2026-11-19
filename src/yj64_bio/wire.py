@@ -50,6 +50,8 @@ def to_wire_review(value: DisciplineReview, *, reviewer_version: str) -> dict[st
 
 
 def to_wire_proposal(value: EnhancementProposal, *, decision_version: int | None = None) -> dict[str, Any]:
+    if not value.evidence:
+        raise ValueError("enhancement proposals require evidence references")
     result = {
         "schema_id": PROPOSAL_SCHEMA, "schema_version": SCHEMA_VERSION,
         "proposal_id": value.proposal_id, "candidate": _candidate_ref(value.candidate),
