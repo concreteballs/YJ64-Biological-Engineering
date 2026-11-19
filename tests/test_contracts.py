@@ -9,7 +9,7 @@ from yj64_bio.contracts import (
 
 @pytest.fixture
 def candidate():
-    return CandidateRef("bio-candidate-1", 1, "1.0")
+    return CandidateRef("bio-candidate-1", 1, "1.0", "biology")
 
 
 def test_missing_relevant_review_blocks_acceptance(candidate):
@@ -64,7 +64,7 @@ def test_enhancement_proposal_is_version_pinned(candidate):
 
 
 def test_candidate_mismatch_rejected(candidate):
-    other = CandidateRef("bio-candidate-1", 2, "1.0")
+    other = CandidateRef("bio-candidate-1", 2, "1.0", "biology")
     with pytest.raises(ValueError):
         ContributionResponse("materials", candidate, proposals=(
             EnhancementProposal(
