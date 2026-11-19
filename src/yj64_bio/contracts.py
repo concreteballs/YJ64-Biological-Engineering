@@ -44,6 +44,10 @@ class EvidenceRef:
     source: str
     evidence_kind: str
     confidence: Optional[float] = None
+    # Stable provenance identity required by the shared wire contract.
+    evidence_id: Optional[str] = None
+    version: str = ""
+    limitations: Sequence[str] = field(default_factory=tuple)
 
     def __post_init__(self) -> None:
         if not self.source.strip() or not self.evidence_kind.strip():
